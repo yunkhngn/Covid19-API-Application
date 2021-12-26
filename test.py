@@ -1,3 +1,1 @@
-import sys
-sys.path.append("path/to/Modules")
-print(sys.path)
+choice = input("Checking for city data?\n1. Yes\n2. No\n")
