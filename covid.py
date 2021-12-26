@@ -19,11 +19,12 @@ def getCityData():
     data = response.json()
     for i in data['locations']:
         if i['name'] == city:
-            print("Total Cases: " + '{:,.0f}'.format(i['infected'])) 
-            print("Total Death: " + '{:,.0f}'.format(i['died']))
-            print("Total Recovered: " + '{:,.0f}'.format(i['recovered']))
-            print("Total Active: " + '{:,.0f}'.format(i['infected'] - i['died'] - i['recovered']))
+            print("Name: " + i['name'])
+            print("Cases Today: " + '{:,.0f}'.format(i['casesToday'])) 
+            print("Death Today: " + '{:,.0f}'.format(i['death']))
+            print("Recovered Today: " + '{:,.0f}'.format(i['recovered']))
 
 getData()
 printData()
+print("----------------------------------------------------")
 getCityData()
