@@ -101,7 +101,7 @@ def GlobalData():
     globalData2.pack(padx=10, pady=3)
 
 def City():
-    global resultFrame, entry
+    global resultFrame, entry, searchButton
     resultFrame = ttk.LabelFrame(tab2, text="Covid19 Information")
     resultFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=(10,0))
 
@@ -148,16 +148,22 @@ def defaultCityGet():
             "Total Death: " + '{:,.0f}'.format(i['death']))
 
 def getDataFromCity():
-    city = entry.get()
+    city = entry.get().lower()
+    lst = [word[0].upper() + word[1:] for word in city.split()]
+    city = " ".join(lst)
+
     url = "https://api.apify.com/v2/key-value-stores/EaCBL1JNntjR3EakU/records/LATEST?disableRedirect=true"
     response = requests.get(url)
     data = response.json()
     for i in data['locations']:
         if i['name'] == city:
+            entry.state(["!invalid"])
             cityTitle.config(text=i['name'] + " Covid19 Information")
             cityData2.config(text="Cases Today: " + '{:,.0f}'.format(i['casesToday']) + "\n" +
             "Recovered Today: " + '{:,.0f}'.format(i['recovered']) + "\n" +
             "Total Death: " + '{:,.0f}'.format(i['death']))
+        else:
+    entry.state(["invalid"])
 
 def App():
     API()
