@@ -1,1 +1,0 @@
-choice = input("Checking for city data?\n1. Yes\n2. No\n")
