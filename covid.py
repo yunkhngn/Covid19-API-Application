@@ -56,10 +56,10 @@ def Window():
     notebook.pack(fill=tk.BOTH, expand=1)
 
     tab1 = ttk.Frame(notebook)
-    notebook.add(tab1, text="Tab 1")
+    notebook.add(tab1, text="Total")
 
     tab2 = ttk.Frame(notebook)
-    notebook.add(tab2, text="Tab 2")
+    notebook.add(tab2, text="City")
 
 def API():
     global data
@@ -102,7 +102,7 @@ def GlobalData():
 
 def City():
     global resultFrame, entry
-    resultFrame = ttk.LabelFrame(tab2, text="Covid19 Application")
+    resultFrame = ttk.LabelFrame(tab2, text="Covid19 Information")
     resultFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=(10,0))
 
     interactFrame = ttk.LabelFrame(tab2, text="Entry")
