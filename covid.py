@@ -4,11 +4,14 @@ import tkinter as tk
 from tkinter.font import BOLD
 import requests
 
+
 NAME = "PC Covid"
 DEFAULTCITY = "Hà Nội"
+THEME = "light"
+LANGUAGE = "English"
 
 def Window():
-    global tab1, tab2, copyrightFrame
+    global tab1, tab2, tab3
     bigframe = ttk.Frame(root)
     bigframe.pack(fill=tk.BOTH, expand=1)
 
@@ -20,6 +23,9 @@ def Window():
 
     tab2 = ttk.Frame(notebook)
     notebook.add(tab2, text="City")
+
+    tab3 = ttk.Frame(notebook)
+    notebook.add(tab3, text="About")
 
 def API():
     global data
@@ -45,14 +51,17 @@ def GlobalData():
     globalTitle.pack(side=TOP, padx=10, pady=(10,0))
 
     seperator = ttk.Separator(resultFrameGlobal, orient=tk.HORIZONTAL)
-    seperator.pack(fill=tk.X, padx=10, pady=10)
+    seperator.pack(fill=tk.X, padx=10, pady=5)
 
     globalData = ttk.Label(resultFrameGlobal, text=
     "Total Cases: " + '{:,.0f}'.format(data['infected']) + "\n"+  
     "Total Death: " + '{:,.0f}'.format(data['died']) + "\n" +
     "Total Recovered: " + '{:,.0f}'.format(data['recovered']) + "\n" +
     "Total Active: " + '{:,.0f}'.format(data['infected'] - data['died'] - data['recovered']) + "\n")
-    globalData.pack(padx=10, pady=3)
+    globalData.pack(padx=10, pady=(3,0))
+
+    seperator = ttk.Separator(resultFrameGlobal, orient=tk.HORIZONTAL)
+    seperator.pack(fill=tk.X, padx=10, pady=0)
 
     globalData2 = ttk.Label(resultFrameGlobal, text=
     "Cases Today: " + '{:,.0f}'.format(data['infectedToday']) + "\n"+  
@@ -88,7 +97,7 @@ def DataCity():
     cityTitle.pack(side=TOP, padx=10, pady=(10,0))
 
     seperator = ttk.Separator(resultFrame, orient=tk.HORIZONTAL)
-    seperator.pack(fill=tk.X, padx=10, pady=10)
+    seperator.pack(fill=tk.X, padx=10, pady=5)
 
     cityData2 = ttk.Label(resultFrame, text=
     "Cases Today: " + "\n" + 
@@ -112,12 +121,15 @@ def getDataFromCity():
     lst = [word[0].upper() + word[1:] for word in city.split()]
     city = " ".join(lst)
 
-    url = "https://api.apify.com/v2/key-value-stores/EaCBL1JNntjR3EakU/records/LATEST?disableRedirect=true"
-    response = requests.get(url)
-    data = response.json()
+    if city == "Tp. Hồ Chí Minh" or city == "Hồ Chí Minh":
+        city = "TP. Hồ Chí Minh"
+        print(city)
+    if city == "Bà Rịa" or city == "Bà Rịa Vũng Tàu" or city == "Vũng Tàu" or city == "Bà Rịa - Vũng Tàu":
+        city = "Bà Rịa – Vũng Tàu"
+        print(city)
+
     for i in data['locations']:
         if i['name'] == city:
-            entry.state(["!invalid"])
             cityTitle.config(text=i['name'] + " Information")
             cityData2.config(text="Cases Today: " + '{:,.0f}'.format(i['casesToday']) + "\n" +
             "Recovered Today: " + '{:,.0f}'.format(i['recovered']) + "\n" +
@@ -127,11 +139,37 @@ def getDataFromCity():
         else:
             entry.state(["invalid"])
 
+def About():
+    global LanguageCurrent
+    Title = ttk.Label(tab3, text="About", font=("Arial", 13, BOLD))
+    Title.pack(side=TOP, padx=10, pady=(10,0))
+
+    seperator = ttk.Separator(tab3, orient=tk.HORIZONTAL)
+    seperator.pack(fill=tk.X, padx=10, pady=5)
+
+    content = ttk.Label(tab3, text=NAME + " is created by Khoa Nguyen.\n\n"
+    "This app is a project of the course of Software Engineering at the University. Feel free to get the open source but please remain the copyrighted information. If you have any information, please contact me or submit it into Github!\n", wraplength= 270, justify=LEFT)
+    content.pack(padx=10, pady=0)
+
+    #create a redicted link to Github that clickable
+    Language = ttk.LabelFrame(tab3, text="Language")
+    Language.pack(side=TOP, padx=10, pady=5, fill=tk.X)
+
+    LanguageButton = ttk.Button(Language, text="Language")
+    LanguageButton.pack(side=LEFT, padx=10, pady=10)
+
+    LanguageCurrent = ttk.Label(Language, text=LANGUAGE)
+    LanguageCurrent.pack(side=RIGHT, padx=10, pady=10)
+
+    Copyright = ttk.Label(tab3, text="Copyright © 2021 by Khoa Nguyen")
+    Copyright.pack(padx=10, pady=10, side=BOTTOM)
+
 def App():
     API()
     Window()
     Global()
     City()
+    About()
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -140,7 +178,7 @@ if __name__ == "__main__":
     root.resizable(False, False)
 
     root.tk.call("source", "sun-valley.tcl")
-    root.tk.call("set_theme", "dark")
+    root.tk.call("set_theme", THEME)
 
     App()
 
