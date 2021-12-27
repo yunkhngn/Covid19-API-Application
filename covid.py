@@ -1,43 +1,3 @@
-# def getData():
-#     global data
-#     url = "https://api.apify.com/v2/key-value-stores/EaCBL1JNntjR3EakU/records/LATEST?disableRedirect=true"
-#     response = requests.get(url)
-#     data = response.json()
-
-# def printData():
-#     print("Total Cases: " + '{:,.0f}'.format(data['infected'])) 
-#     print("Total Death: " + '{:,.0f}'.format(data['died']))
-#     print("Total Recovered: " + '{:,.0f}'.format(data['recovered']))
-#     print("Total Active: " + '{:,.0f}'.format(data['infected'] - data['died'] - data['recovered']))
-#     print("----------------------------------------------------")
-
-# def exportData():
-#     city = input("Enter a city: ")
-#     url = "https://api.apify.com/v2/key-value-stores/EaCBL1JNntjR3EakU/records/LATEST?disableRedirect=true"
-#     response = requests.get(url)
-#     data = response.json()
-#     for i in data['locations']:
-#         if i['name'] == city:
-#             print("Name: " + i['name'])
-#             print("Cases Today: " + '{:,.0f}'.format(i['casesToday'])) 
-#             print("Death Today: " + '{:,.0f}'.format(i['death']))
-#             print("Recovered Today: " + '{:,.0f}'.format(i['recovered']))
-#         else :
-#             print("No city data")
-# def getCityData():
-#     #loop if the answer is not 1 or 2
-#     choice = input("Checking for city data?\n1. Yes\n2. No\n")
-#     if choice == "1":
-#         exportData()
-#     elif choice == "2":
-#         print("No city data")
-
-# if __name__ == "__main__":
-#     getData()
-#     printData()
-#     getCityData()
-
-
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -124,7 +84,7 @@ def City():
 def DataCity():
     global cityTitle, cityData2
     city = "Hà Nội"
-    cityTitle = ttk.Label(resultFrame, text= city + " Covid19 Information", font=("Arial", 13, BOLD))
+    cityTitle = ttk.Label(resultFrame, text= city + " Information", font=("Arial", 13, BOLD))
     cityTitle.pack(side=TOP, padx=10, pady=(10,0))
 
     seperator = ttk.Separator(resultFrame, orient=tk.HORIZONTAL)
@@ -142,7 +102,7 @@ def defaultCityGet():
     city = DEFAULTCITY
     for i in data['locations']:
         if i['name'] == city:
-            cityTitle.config(text=i['name'] + " Covid19 Information")
+            cityTitle.config(text=i['name'] + " Information")
             cityData2.config(text="Cases Today: " + '{:,.0f}'.format(i['casesToday']) + "\n" +
             "Recovered Today: " + '{:,.0f}'.format(i['recovered']) + "\n" +
             "Total Death: " + '{:,.0f}'.format(i['death']))
@@ -158,12 +118,14 @@ def getDataFromCity():
     for i in data['locations']:
         if i['name'] == city:
             entry.state(["!invalid"])
-            cityTitle.config(text=i['name'] + " Covid19 Information")
+            cityTitle.config(text=i['name'] + " Information")
             cityData2.config(text="Cases Today: " + '{:,.0f}'.format(i['casesToday']) + "\n" +
             "Recovered Today: " + '{:,.0f}'.format(i['recovered']) + "\n" +
             "Total Death: " + '{:,.0f}'.format(i['death']))
+            entry.state(["!invalid"])
+            break
         else:
-    entry.state(["invalid"])
+            entry.state(["invalid"])
 
 def App():
     API()
