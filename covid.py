@@ -95,7 +95,7 @@ def GlobalData():
 def City():
     global resultFrame, entry, searchButton
     resultFrame = ttk.LabelFrame(tab2, text="Covid19 Information")
-    resultFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=(10,0))
+    resultFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=(5,0))
 
     interactFrame = ttk.LabelFrame(tab2, text="Entry")
     interactFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=0)
@@ -164,24 +164,26 @@ def getDataFromCity():
 
 def About():
     global LanguageCurrent, content
-    Title = ttk.Label(tab3, text="About", font=("Arial", 13, BOLD))
+
+    aboutFrame = ttk.LabelFrame(tab3, text="About")
+    aboutFrame.pack(fill=tk.BOTH, expand=1, padx=10, pady=(5,0))
+
+    Title = ttk.Label(aboutFrame, text="About", font=("Arial", 13, BOLD))
     Title.pack(side=TOP, padx=10, pady=(10,0))
 
-    seperator = ttk.Separator(tab3, orient=tk.HORIZONTAL)
+    seperator = ttk.Separator(aboutFrame, orient=tk.HORIZONTAL)
     seperator.pack(fill=tk.X, padx=10, pady=5)
 
-    content = ttk.Label(tab3, text=NAME + " is created by Khoa Nguyen.\n\n"
-    "This app is a project of the course of Software Engineering at the University. Feel free to get the open source but please remain the copyrighted information. If you have any information, please contact me or submit it into Github!\n", wraplength= 270, justify=LEFT)
+    content = ttk.Label(aboutFrame, text=NAME + " is created by Khoa Nguyen.\n\n"
+    "This app is a project of the course of Software Engineering at the University. Feel free to get the open source but please remain the copyrighted information. If you have any information, please contact me or submit it into Github!\n", wraplength= 260, justify=LEFT)
     content.pack(padx=10, pady=0)
 
     #create a redicted link to Github that clickable
-    Language = ttk.LabelFrame(tab3, text="Language")
-    Language.pack(side=TOP, padx=10, pady=5, fill=tk.X)
-
-    LanguageButton = ttk.Button(Language, text="Language", command=LanguageChanger)
+  
+    LanguageButton = ttk.Button(aboutFrame, text="Language", command=LanguageChanger)
     LanguageButton.pack(side=LEFT, padx=10, pady=10)
 
-    LanguageCurrent = ttk.Label(Language, text="English")
+    LanguageCurrent = ttk.Label(aboutFrame, text="English")
     LanguageCurrent.pack(side=RIGHT, padx=10, pady=10)
 
     Copyright = ttk.Label(tab3, text="Copyright © 2021 by Khoa Nguyen")
